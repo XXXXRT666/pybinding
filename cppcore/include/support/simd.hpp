@@ -137,10 +137,18 @@ split_loop_t<step> split_loop(scalar_t const* p, idx_t start, idx_t end) {
 /**
  RAII class which disables floating-point denormals (flush-to-zero mode)
  */
-struct scope_disable_denormals {
-    CPB_ALWAYS_INLINE scope_disable_denormals() { _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_ON); }
-    CPB_ALWAYS_INLINE ~scope_disable_denormals() { _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_OFF); }
-};
+#if defined(__x86_64__) || defined(_M_X64) || defined(__i386__) || defined(_M_IX86)
+    #include <xmmintrin.h>
+    struct scope_disable_denormals {
+        CPB_ALWAYS_INLINE scope_disable_denormals()  { _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_ON); }
+        CPB_ALWAYS_INLINE ~scope_disable_denormals() { _MM_SET_FLUSH_ZERO_MODE(_MM_FLUSH_ZERO_OFF); }
+    };
+#else
+    struct scope_disable_denormals {
+        CPB_ALWAYS_INLINE scope_disable_denormals()  {}   // no-op
+        CPB_ALWAYS_INLINE ~scope_disable_denormals() {}   // no-op
+    };
+#endif
 
 namespace detail {
     template<class Vector> struct Gather;

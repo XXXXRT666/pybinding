@@ -5,7 +5,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 option(PB_WERROR "Make all warnings into errors" OFF)
 option(PB_TESTS "Enable testing" ON)
-option(PB_NATIVE_SIMD "Enable all instruction sets supported by the local machine" ON)
+option(PB_NATIVE_SIMD "Enable all instruction sets supported by the local machine" OFF)
 option(PB_MKL "Use Intel's Math Kernel Library" OFF)
 option(PB_CUDA "Enable compilation of components written in CUDA" OFF)
 set(PB_CPP_STANDARD "-std=c++11" CACHE STRING "Required C++ standard flag")
@@ -113,7 +113,7 @@ include(warnings)
 enable_warnings(cppcore)
 
 include(download)
-download_dependency(eigen3 3.3.3
+download_dependency(eigen3 3.3.5
                     https://gitlab.com/libeigen/eigen/-/archive/\${VERSION}
                     eigen-\${VERSION}.tar.gz */Eigen)
 target_include_directories(cppcore SYSTEM PUBLIC ${EIGEN3_INCLUDE_DIR})
