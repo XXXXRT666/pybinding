@@ -1,3 +1,4 @@
 [submodule "cppmodule/deps/pybind11"]
-	path = cppmodule/deps/pybind11
-	url = https://github.com/pybind/pybind11.git
+    path = cppmodule/deps/pybind11
+    url  = https://github.com/pybind/pybind11.git
+    branch = v2.12
