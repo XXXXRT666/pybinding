@@ -44,6 +44,7 @@ class CMakeBuild(build_ext):
             "-DPB_NATIVE_SIMD=" + os.environ.get("PB_NATIVE_SIMD", "OFF"),
             "-DPB_MKL=" + os.environ.get("PB_MKL", "OFF"),
             "-DPB_CUDA=" + os.environ.get("PB_CUDA", "OFF"),
+            "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
         ]
 
         cfg = os.environ.get("PB_BUILD_TYPE", "Release")
